@@ -3,7 +3,16 @@ Virtual machine for development
 
 This environment uses [vagrant][vagrant] as vm manager and [ansible][ansible] as provisioner. In this case I did not provision using vagrant, but for more excitement it is executed by user.
 
-#### Virtual machine specification:
+### Requirements
+
+ - [Virtualbox][virtualbox_download] (>=4.3)
+ - [Vagrant][vagrant_download] (>=1.7)
+ - [Ansible][ansible_download] (>=1.8, recommend using pip)
+ - paramiko (python library)
+
+> The more latest you can get the better, but I dont currently know which versions should be the lowest exactly.
+
+### Virtual machine specification:
 
  - box: *ubuntu/trusty64*
  - vm's: *1*
@@ -41,6 +50,9 @@ I've created this environment after reading [Ansible: Up and Running][book], so 
 [book]: http://shop.oreilly.com/product/0636920035626.do
 [vagrant]: https://github.com/mitchellh/vagrant
 [ansible]: https://github.com/ansible/ansible
+[virtualbox_download]: https://www.virtualbox.org/wiki/Downloads
+[ansible_download]: https://github.com/ansible/ansible
+[vagrant_download]: https://www.vagrantup.com/downloads.html
 [vagrantfile]: https://github.com/martiis/development-vm/blob/master/Vagrantfile
 [sf_nginx]: http://symfony.com/doc/current/cookbook/configuration/web_server_configuration.html#nginx
 [nginx_vh]: https://github.com/martiis/development-vm/blob/master/playbook/template/nginx.vhost.j2

@@ -8,20 +8,23 @@ required_plugins.each do |plugin|
 	end
 end
 
-Vagrant.configure(2) do |config|
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 	config.ssh.insert_key = false
+	config.ssh.forward_agent = true
+
+	config.vm.hostname = "vm.dev"
+	config.hostmanager.enabled = true
+	config.hostmanager.manage_host = true
+	config.hostmanager.ignore_private_ip = false
+	config.hostmanager.include_offline = true
+	config.hostmanager.aliases = ["www.vm.dev"]
 
   config.vm.define "dev-vm" do |v|
     v.vm.box = "ubuntu/trusty64"
     v.vm.network :private_network, ip: "192.168.52.101"
     v.vm.synced_folder "./", "/var/www", type: "nfs"
-
-    v.vm.hostname = "vm.dev"
-    v.hostmanager.enabled = true
-    v.hostmanager.manage_host = true
-    v.hostmanager.ignore_private_ip = false
-    v.hostmanager.include_offline = true
-    v.hostmanager.aliases = ["www.vm.dev"]
 
     v.vm.provider :virtualbox do |virtualbox|
       virtualbox.gui = false

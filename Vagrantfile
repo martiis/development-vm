@@ -14,8 +14,7 @@ Vagrant.configure(2) do |config|
   config.vm.define "dev-vm" do |v|
     v.vm.box = "ubuntu/trusty64"
     v.vm.network :private_network, ip: "192.168.52.101"
-    v.vm.synced_folder "./public_html", "/var/www/public_html", type: "nfs"
-    v.vm.synced_folder "./private_html", "/var/www/private_html", type: "nfs"
+    v.vm.synced_folder "./", "/var/www", type: "nfs"
 
     v.vm.hostname = "vm.dev"
     v.hostmanager.enabled = true

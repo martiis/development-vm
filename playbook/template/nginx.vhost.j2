@@ -1,6 +1,6 @@
 server {
     server_name {{ server_name }};
-    root /var/www/public_html/web
+    root /var/www/public_html/web;
 
     location / {
         try_files $uri /app_dev.php$is_args$args;

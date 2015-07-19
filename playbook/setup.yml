@@ -47,21 +47,6 @@
         creates: /usr/local/bin/symfony
     - name: Provide permissions for Symfony Installer
       file: path=/usr/local/bin/symfony mode="a+x"
-    - name: Collect public_html status
-      stat: path=/var/www/public_html/web
-      register: phtml
-    - name: Cleanup files in public_html
-      file: path=/var/www/public_html/* state=absent
-      when: phtml.stat.exists == false
-    - name: Cleanup hidden files in public_html
-      file: path=/var/www/public_html/.* state=absent
-      when: phtml.stat.exists == false
-    - name: Initialize new syfmony project
-      shell: symfony new /var/www/public_html {{ symfony_version }}
-      when: phtml.stat.exists == false
-      args:
-        creates: /var/www/public_html/web
-
   handlers:
     - name: restart nginx
       service: name=nginx state=restarted

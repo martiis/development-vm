@@ -1,0 +1,5 @@
+private_html/*
+!private_html/.gitkeep
+public_html/*
+!public_html/.gitkeep
+.vagrant/

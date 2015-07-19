@@ -1,0 +1,67 @@
+---
+- name: Setup web server
+  hosts: dev-vm
+  sudo: True
+  vars:
+    server_name: vm.dev
+    nginx_host_file: /etc/nginx/sites-available/default
+    symfony_version: latest
+  tasks:
+    - name: Add repositories
+      apt_repository: repo={{ item }}
+      with_items:
+        - "ppa:ondrej/php5-5.6"
+        - "ppa:nginx/stable"
+    - name: Install packages
+      apt: pkg={{ item }} update_cache=true cache_valid_time=3600
+      with_items:
+        - php5-dev
+        - php5-cli
+        - php5-gd
+        - php5-json
+        - php5-curl
+        - php5-mysql
+        - php5-intl
+        - php5-mcrypt
+        - php5-common
+        - php5-xdebug
+        - php5-fpm
+        - nginx
+        - build-essential
+        - htop
+        - curl
+    - name: Copy nginx virtual host file
+      template: src=template/nginx.vhost.j2 dest={{ nginx_host_file }}
+      notify: restart nginx
+    - name: Enable nginx configuration
+      file: src={{ nginx_host_file }}  dest=/etc/nginx/sites-enabled/default state=link
+      notify: restart nginx
+    - name: Install Composer - Dependency Manager for PHP
+      shell: curl -sS https://getcomposer.org/installer | php -- --filename=composer
+      args:
+        chdir: /usr/local/bin
+        creates: /usr/local/bin/composer
+    - name: Install Symfony Installer
+      shell: sudo curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
+      args:
+        creates: /usr/local/bin/symfony
+    - name: Provide permissions for Symfony Installer
+      file: path=/usr/local/bin/symfony mode="a+x"
+    - name: Collect public_html status
+      stat: path=/var/www/public_html/web
+      register: phtml
+    - name: Cleanup files in public_html
+      file: path=/var/www/public_html/* state=absent
+      when: phtml.stat.exists == false
+    - name: Cleanup hidden files in public_html
+      file: path=/var/www/public_html/.* state=absent
+      when: phtml.stat.exists == false
+    - name: Initialize new syfmony project
+      shell: symfony new /var/www/public_html {{ symfony_version }}
+      when: phtml.stat.exists == false
+      args:
+        creates: /var/www/public_html/web
+
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted

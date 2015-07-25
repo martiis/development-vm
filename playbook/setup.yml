@@ -2,40 +2,24 @@
 - name: Setup web server
   hosts: dev-vm
   sudo: True
+  roles:
+    - role: php
+    - role: nginx
+      nginx_document_root: /var/www/public_html/web
+    - role: mysql
+      mysql_bind_address: 0.0.0.0
+    - role: nodejs
+      npm_global_packages: [bower, gulp]
   vars:
-    server_name: vm.dev
-    nginx_host_file: /etc/nginx/sites-available/default
     symfony_version: latest
-  tasks:
-    - name: Add repositories
-      apt_repository: repo={{ item }}
-      with_items:
-        - "ppa:ondrej/php5-5.6"
-        - "ppa:nginx/stable"
+  pre_tasks:
     - name: Install packages
       apt: pkg={{ item }} update_cache=true cache_valid_time=3600
       with_items:
-        - php5-dev
-        - php5-cli
-        - php5-gd
-        - php5-json
-        - php5-curl
-        - php5-mysql
-        - php5-intl
-        - php5-mcrypt
-        - php5-common
-        - php5-xdebug
-        - php5-fpm
-        - nginx
         - build-essential
         - htop
         - curl
-    - name: Copy nginx virtual host file
-      template: src=template/nginx.vhost.j2 dest={{ nginx_host_file }}
-      notify: restart nginx
-    - name: Enable nginx configuration
-      file: src={{ nginx_host_file }}  dest=/etc/nginx/sites-enabled/default state=link
-      notify: restart nginx
+  tasks:
     - name: Install Composer - Dependency Manager for PHP
       shell: curl -sS https://getcomposer.org/installer | php -- --filename=composer
       args:
@@ -47,6 +31,5 @@
         creates: /usr/local/bin/symfony
     - name: Provide permissions for Symfony Installer
       file: path=/usr/local/bin/symfony mode="a+x"
-  handlers:
-    - name: restart nginx
-      service: name=nginx state=restarted
+    - name: Create debug env file
+      copy: src=files/debug dest=/usr/local/bin/debug mode=755

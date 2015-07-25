@@ -1,0 +1,16 @@
+[date]
+date.timezone={{ php_date_timezone }}
+
+[xdebug]
+xdebug.default_enable=1
+xdebug.max_nesting_level={{ php_xdebug_max_nesting_level }}
+xdebug.remote_autostart=0
+xdebug.remote_connect_back=1
+xdebug.remote_enable=1
+xdebug.remote_handler=dbgp
+xdebug.remote_port={{ php_xdebug_port }}
+xdebug.remote_host={{ php_xdebug_remote_host }}
+
+post_max_size = 512M
+upload_max_filesize = 512M
+memory_limit = -1

@@ -1,0 +1,23 @@
+- name: PHP 5.6 repository
+  apt_repository: repo=ppa:ondrej/php5-5.6
+- name: Installing packages
+  apt: pkg={{ item }} update_cache=true
+  with_items:
+    - php5-dev
+    - php5-cli
+    - php5-fpm
+    - php5-gd
+    - php5-json
+    - php5-curl
+    - php5-mysql
+    - php5-intl
+    - php5-mcrypt
+    - php5-common
+    - php5-xdebug
+- name: Create custom configuration
+  template: src=custom.ini.j2 dest=/etc/php5/mods-available/custom.ini owner=root group=root
+- name: Create configuration links
+  file: src=/etc/php5/mods-available/custom.ini dest=/etc/php5/{{ item }}/conf.d/20-custom.ini state=link
+  with_items: [fpm, cli]
+  notify:
+    - restart php5-fpm

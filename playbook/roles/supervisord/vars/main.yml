@@ -1,0 +1,4 @@
+supervisord_log_dir: /var/log/supervisor
+supervisord_kill_as_group: true
+supervisord_programs: []
+supervisord_groups: []

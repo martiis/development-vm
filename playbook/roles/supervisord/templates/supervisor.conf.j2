@@ -1,0 +1,15 @@
+{% for program in supervisord_programs %}
+[program:{{ program.name }}]
+command={{ program.command }}
+stdout_logfile={{ supervisord_log_dir }}/program_{{ program.name }}.log
+stderr_logfile={{ supervisord_log_dir }}/program_{{ program.name }}.error
+priority=100
+killasgroup={{ supervisord_kill_as_group }}
+
+{% endfor %}
+{% for group in supervisord_groups %}
+[group:{{ group.name }}]
+programs={{ group.programs|join(',') }}
+priority=100
+
+{% endfor %}

@@ -1,0 +1,4 @@
+php_xdebug_port: 9000
+php_xdebug_remote_host: 192.168.52.1
+php_xdebug_max_nesting_level: 250
+php_date_timezone: "Europe/Vilnius"

@@ -1,0 +1,5 @@
+nginx_server_name: vm.dev
+nginx_host_file: /etc/nginx/sites-available/default
+nginx_document_root: /var/www
+nginx_client_max_body_size: 500m
+nginx_keepalive_timeout: 20

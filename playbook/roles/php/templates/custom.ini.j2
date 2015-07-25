@@ -11,6 +11,6 @@ xdebug.remote_handler=dbgp
 xdebug.remote_port={{ php_xdebug_port }}
 xdebug.remote_host={{ php_xdebug_remote_host }}
 
-post_max_size = 512M
-upload_max_filesize = 512M
-memory_limit = -1
+post_max_size = {{ php_post_max_size }}
+upload_max_filesize = {{ php_upload_max_filesize }}
+memory_limit = {{ php_memory_limit }}

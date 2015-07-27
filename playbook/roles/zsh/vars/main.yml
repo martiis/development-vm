@@ -1,0 +1,8 @@
+ZSH_THEME: avit
+ZSH_DISABLE_AUTO_UPDATE: true
+ZSH_ENABLE_CORRECTION: true
+ZSH_COMPLETION_WAITING_DOTS: true
+ZSH_PLUGINS:
+  - git
+  - common-aliases
+ZSH_EXTRA: ''

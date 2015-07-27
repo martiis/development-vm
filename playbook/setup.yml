@@ -10,6 +10,10 @@
       mysql_bind_address: 0.0.0.0
     - role: nodejs
       npm_global_packages: [bower, gulp]
+    - role: zsh
+      ZSH_EXTRA: >
+        alias dev='php app/console --env=dev'
+        alias prod='php app/console --env=prod'
   vars:
     symfony_version: latest
   pre_tasks:

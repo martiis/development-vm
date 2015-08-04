@@ -1,0 +1,4 @@
+---
+  - name: Restart system config
+    shell: sysctl -p
+    sudo: true

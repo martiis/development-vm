@@ -1,0 +1,6 @@
+---
+  hadoop_user_pass: "$6$.5sB/QJTgwBfS2o$q5IQ2C9Ao6.3fOKbNy7tP8xw4Z0DJvk7a/r.FaRmJsmLOTW5r/V3SkIFvbk3aDxnUc7ZgeybAtYpzIOP5dFAn0"
+  hadoop_download_url: "http://apache.mirror.vu.lt/apache/hadoop/common/hadoop-2.7.1/hadoop-2.7.1.tar.gz"
+  hadoop_name: hadoop-2.7.1
+  hadoop_java_home: /usr/local/java
+  hadoop_tmp_dir: /tmp/hadoop

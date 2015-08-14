@@ -3,3 +3,5 @@ private_html/*
 public_html/*
 !public_html/.gitkeep
 .vagrant/
+/vendor/
+/html/

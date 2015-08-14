@@ -1,0 +1,32 @@
+---
+  - name: Add gpg key
+    apt_key: url=https://packages.elastic.co/GPG-KEY-elasticsearch state=present
+  - name: Add repository
+    apt_repository: repo="deb http://packages.elastic.co/elasticsearch/{{ elasticsearch_version }}/debian stable main" state=present
+  - name: Install package
+    apt: name=elasticsearch state=present update_cache=yes cache_valid_time=3600
+    notify:
+      - start elasticsearch
+  - name: Configure
+    lineinfile: >
+      dest=/etc/elasticsearch/elasticsearch.yml
+      regexp="{{ item.regexp }}"
+      line="{{ item.line }}"
+      state=present
+    with_items:
+      - { regexp: '^script\.disable_dynamic', line: 'script.disable_dynamic: true' }
+      - { regexp: 'network\.host', line: 'network.host: localhost' }
+    notify:
+      - restart elasticsearch
+  - name: Get installed plugin list
+    command: "bin/plugin -l chdir=/usr/share/elasticsearch"
+    changed_when: false
+    register: es_installed_plugins
+  - name: Install plugins
+    command: "bin/plugin -i {{ item.package }} chdir=/usr/share/elasticsearch"
+    with_items: "{{ elasticsearch_plugins }}"
+    when: "'- {{ item.name }}' not in es_installed_plugins.stdout"
+  - name: Ensure running
+    service: name=elasticsearch state=started
+  - name: Wait for client to be ready
+    wait_for: host=localhost port=9200

@@ -1,0 +1,7 @@
+---
+  elasticsearch_version: 1.7
+  elasticsearch_plugins:
+    - name: head
+      package: "mobz/elasticsearch-head"
+    - name: marvel
+      package: "elasticsearch/marvel/latest"

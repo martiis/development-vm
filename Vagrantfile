@@ -21,14 +21,14 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.include_offline = true
   config.hostmanager.aliases = ["www.vm.dev"]
 
-  config.vm.define "dev-vm" do |v|
+  config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"
     v.vm.network :private_network, ip: "192.168.52.101"
     v.vm.synced_folder "./", "/var/www", type: "nfs"
 
     v.vm.provider :virtualbox do |virtualbox|
       virtualbox.gui = false
-      virtualbox.name = "dev-vm"
+      virtualbox.name = "vm"
       virtualbox.cpus = 1
       virtualbox.memory = 1024
       virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
@@ -38,4 +38,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 
   config.vm.provision "shell", path: "vagrant/python.sh"
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook/setup.yml"
+  end
 end

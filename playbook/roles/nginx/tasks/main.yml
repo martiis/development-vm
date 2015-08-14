@@ -5,10 +5,13 @@
     apt: pkg=nginx update_cache=true cache_valid_time=3600
   - name: Copy nginx virtual host file
     template: src=nginx.vhost.j2 dest={{ nginx_host_file }}
-    notify: restart nginx
+    notify:
+      - restart nginx
   - name: Copy nginx configuration file
     template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
-    notify: restart nginx
+    notify:
+      - restart nginx
   - name: Enable nginx site
     file: src={{ nginx_host_file }}  dest=/etc/nginx/sites-enabled/default state=link
-    notify: restart nginx
+    notify:
+      - restart nginx

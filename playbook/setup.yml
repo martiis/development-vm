@@ -29,6 +29,8 @@
           - curl
           - ruby
           - ruby-dev
+          - unzip
+          - python-software-properties
       - name: Generate en_US.UTF-8 Locale
         locale_gen: name=en_US.UTF-8 state=present
     tasks:
@@ -45,3 +47,10 @@
         file: path=/usr/local/bin/symfony mode="a+x"
       - name: Create debug env file
         copy: src=files/debug dest=/usr/local/bin/debug mode=755
+    post_tasks:
+      - name: Install bundler ruby gem
+        shell: gem install bundler
+      - name: Install bundler dependencies
+        command: bundle install
+        args:
+          chdir: /var/www

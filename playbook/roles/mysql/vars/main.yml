@@ -2,4 +2,5 @@
   mysql_port: 3306
   mysql_bind_address: "127.0.0.1"
   mysql_root_pass: root
-  mysql_root_host: __REWRITE
+  mysql_users:
+      - { name: root, host: __REWRITE, password: '', privileges: '*.*:ALL,GRANT' }

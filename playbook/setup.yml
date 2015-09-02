@@ -9,17 +9,25 @@
     roles:
       - role: php
         php_xdebug_remote_host: "{{ box_gateway }}"
+
       - role: nginx
-        nginx_document_root: /var/www/public_html/web
+        nginx_vhosts:
+          symfony:
+            - { name: vm.dev, document_root: /var/www/public_html/web, document_index: app_dev }
+
       - role: mysql
         mysql_bind_address: 0.0.0.0
-        mysql_root_host: "{{ box_gateway }}"
+        mysql_users:
+          - { name: root, host: "{{ box_gateway }}", password: 'root', privileges: '*.*:ALL,GRANT' }
+
       - role: nodejs
         npm_global_packages: [bower, gulp]
+
       - role: zsh
         ZSH_EXTRA: >
           alias dev='php app/console --env=dev'
           alias prod='php app/console --env=prod'
+
     pre_tasks:
       - name: Install packages
         apt: pkg={{ item }} update_cache=true cache_valid_time=3600
@@ -30,26 +38,34 @@
           - ruby
           - ruby-dev
           - unzip
+          - make
           - python-software-properties
+
       - name: Generate en_US.UTF-8 Locale
         locale_gen: name=en_US.UTF-8 state=present
+
     tasks:
       - name: Install Composer - Dependency Manager for PHP
         shell: curl -sS https://getcomposer.org/installer | php -- --filename=composer
         args:
           chdir: /usr/local/bin
           creates: /usr/local/bin/composer
+
       - name: Install Symfony Installer
         shell: sudo curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
         args:
           creates: /usr/local/bin/symfony
+
       - name: Provide permissions for Symfony Installer
         file: path=/usr/local/bin/symfony mode="a+x"
+
       - name: Create debug env file
         copy: src=files/debug dest=/usr/local/bin/debug mode=755
+
     post_tasks:
-      - name: Install bundler ruby gem
-        shell: gem install bundler
+      - name: Install bundler as ruby gem
+        gem: name=bundler user_install=no state=present
+
       - name: Install bundler dependencies
         command: bundle install
         args:

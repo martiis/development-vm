@@ -1,17 +1,36 @@
 ---
-  - name: Add repository
-    apt_repository: repo=ppa:nginx/stable
   - name: Install package
     apt: pkg=nginx update_cache=true cache_valid_time=3600
-  - name: Copy nginx virtual host file
-    template: src=nginx.vhost.j2 dest={{ nginx_host_file }}
+
+  - name: Copy Syfmony virtual hosts
+    template: src=symfony.vhost.j2 dest=/etc/nginx/sites-available/symfony.{{ item.name }}
+    when: nginx_vhosts.symfony is defined
+    with_items: nginx_vhosts.symfony
     notify:
       - restart nginx
+
+  - name: Copy OXID virtual hosts
+    template: src=oxid.vhost.j2 dest=/etc/nginx/sites-available/oxid.{{ item.name }}
+    when: nginx_vhosts.oxid is defined
+    with_items: nginx_vhosts.oxid
+    notify:
+      - restart nginx
+
   - name: Copy nginx configuration file
     template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
     notify:
       - restart nginx
-  - name: Enable nginx site
-    file: src={{ nginx_host_file }}  dest=/etc/nginx/sites-enabled/default state=link
+
+  - name: Enable Symfony sites
+    file: src=/etc/nginx/sites-available/symfony.{{ item.name }}  dest=/etc/nginx/sites-enabled/symfony.{{ item.name }} state=link
+    when: nginx_vhosts.symfony is defined
+    with_items: nginx_vhosts.symfony
+    notify:
+      - restart nginx
+
+  - name: Enable OXID sites
+    file: src=/etc/nginx/sites-available/oxid.{{ item.name }}  dest=/etc/nginx/sites-enabled/oxid.{{ item.name }} state=link
+    when: nginx_vhosts.oxid is defined
+    with_items: nginx_vhosts.oxid
     notify:
       - restart nginx

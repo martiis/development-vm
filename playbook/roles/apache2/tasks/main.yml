@@ -1,0 +1,29 @@
+---
+  - name: Add debian non-free repository
+    apt_repository: repo='deb http://http.us.debian.org/debian jessie main non-free' state=present
+  - name: Installing
+    apt: pkg={{ item }} update_cache=true
+    with_items:
+      - apache2-mpm-worker
+      - libapache2-mod-fastcgi
+  - name: Configuring modules
+    apache2_module: state={{ item.state }} name={{ item.name }}
+    with_items:
+      - { state: present, name: actions }
+      - { state: present, name: fastcgi }
+      - { state: present, name: actions }
+      - { state: absent, name: mpm_prefork }
+    notify:
+      - restart apache2
+  - name: Create fcgi file
+    file: path=/usr/lib/cgi-bin/php5.fcgi state=touch
+  - name: Set fcgi directory permissions
+    file: path=/usr/lib/cgi-bin state=directory owner=www-data group=www-data recurse=true
+  - name: Copy php5-fpm global configuration
+    template: src=php5-fpm.j2 dest=/etc/apache2/conf-available/php5-fpm.conf
+  - name: Enable php5-fpm global configuration
+    shell: a2enconf php5-fpm
+    args:
+        creates: /etc/apache2/conf-enabled/php5-fpm.conf
+    notify:
+      - restart apache2

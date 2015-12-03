@@ -30,7 +30,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       virtualbox.gui = false
       virtualbox.name = "vm"
       virtualbox.cpus = 1
-      virtualbox.memory = 1024
+      virtualbox.memory = 2048
       virtualbox.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       virtualbox.customize ["modifyvm", :id, "--cpuexecutioncap", "95"]
       virtualbox.customize ["setextradata", :id, "--VBoxInternal2/SharedFoldersEnableSymlinksCreate/v-root", "1"]

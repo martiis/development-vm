@@ -1,5 +1,0 @@
----
-  java_download_url: "http://download.oracle.com/otn-pub/java/jdk/8u51-b16/jdk-8u51-linux-x64.tar.gz"
-  java_download_folder: "/tmp"
-  java_home: "/usr/local/java"
-  java_name: "jdk1.8.0_51"

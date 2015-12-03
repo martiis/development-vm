@@ -22,7 +22,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.hostmanager.aliases = ["www.vm.dev"]
 
   config.vm.define "vm" do |v|
-    v.vm.box = "ubuntu/trusty64"
+    v.vm.box = "debian/jessie64"
     v.vm.network :private_network, ip: "192.168.52.101"
     v.vm.synced_folder "./", "/var/www", type: "nfs"
 

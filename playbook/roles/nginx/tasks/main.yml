@@ -5,14 +5,14 @@
   - name: Copy Syfmony virtual hosts
     template: src=symfony.vhost.j2 dest=/etc/nginx/sites-available/symfony.{{ item.name }}
     when: nginx_vhosts.symfony is defined
-    with_items: nginx_vhosts.symfony
+    with_items: "{{ nginx_vhosts.symfony }}"
     notify:
       - restart nginx
 
   - name: Copy OXID virtual hosts
     template: src=oxid.vhost.j2 dest=/etc/nginx/sites-available/oxid.{{ item.name }}
     when: nginx_vhosts.oxid is defined
-    with_items: nginx_vhosts.oxid
+    with_items: "{{ nginx_vhosts.oxid }}"
     notify:
       - restart nginx
 
@@ -24,13 +24,13 @@
   - name: Enable Symfony sites
     file: src=/etc/nginx/sites-available/symfony.{{ item.name }}  dest=/etc/nginx/sites-enabled/symfony.{{ item.name }} state=link
     when: nginx_vhosts.symfony is defined
-    with_items: nginx_vhosts.symfony
+    with_items: "{{ nginx_vhosts.symfony }}"
     notify:
       - restart nginx
 
   - name: Enable OXID sites
     file: src=/etc/nginx/sites-available/oxid.{{ item.name }}  dest=/etc/nginx/sites-enabled/oxid.{{ item.name }} state=link
     when: nginx_vhosts.oxid is defined
-    with_items: nginx_vhosts.oxid
+    with_items: "{{ nginx_vhosts.oxid }}"
     notify:
       - restart nginx

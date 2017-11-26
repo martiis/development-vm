@@ -48,5 +48,5 @@
       login_password={{ mysql_root_pass }}
       priv={{ item.privileges }}
       state=present
-    with_items: mysql_users
+    with_items: "{{ mysql_users }}"
 

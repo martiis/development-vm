@@ -1,5 +1,5 @@
 ---
-  - name: Setup web server
+  - name: Setup
     hosts: vm
     become: True
     vars:
@@ -41,6 +41,12 @@
           - make
           - python-software-properties
           - openjdk-7-jre
+          - python3-pip
+
+      - name: Install common pip packages
+        pip: name={{ item }} executable=/usr/bin/pip3 state=present
+        with_items:
+          - httpie
 
       - name: Generate en_US.UTF-8 Locale
         locale_gen: name=en_US.UTF-8 state=present

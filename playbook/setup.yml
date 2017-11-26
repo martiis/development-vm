@@ -1,7 +1,7 @@
 ---
   - name: Setup web server
     hosts: vm
-    sudo: True
+    become: True
     vars:
         box_address: "{{ hostvars[inventory_hostname].ansible_all_ipv4_addresses[1] }}"
         box_address_parts: "{{ box_address.split('.') }}"
@@ -53,7 +53,7 @@
           creates: /usr/local/bin/composer
 
       - name: Install Symfony Installer
-        shell: sudo curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
+        shell: curl -LsS http://symfony.com/installer -o /usr/local/bin/symfony
         args:
           creates: /usr/local/bin/symfony
 

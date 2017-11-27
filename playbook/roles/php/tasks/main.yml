@@ -1,28 +1,28 @@
-- name: PHP 7.1 repository
+- name: Adding PHP-{{ php_version }} repository
   apt_repository: repo=ppa:ondrej/php
 - name: Installing packages
-  apt: pkg={{ item }} update_cache=true
+  apt: pkg=php{{ php_version }}-{{ item }} update_cache=true
   with_items:
-    - php7.1-dev
-    - php7.1-cli
-    - php7.1-fpm
-    - php7.1-gd
-    - php7.1-json
-    - php7.1-curl
-    - php7.1-mysql
-    - php7.1-sqlite3
-    - php7.1-intl
-    - php7.1-mcrypt
-    - php7.1-mbstring
-    - php7.1-zip
-    - php7.1-xml
-    - php7.1-common
-    - php7.1-opcache
-    - php7.1-xdebug
+    - dev
+    - cli
+    - fpm
+    - gd
+    - json
+    - curl
+    - mysql
+    - sqlite3
+    - intl
+    - mcrypt
+    - mbstring
+    - zip
+    - xml
+    - common
+    - opcache
+    - xdebug
 - name: Create custom configuration
-  template: src=custom.ini.j2 dest=/etc/php/7.1/mods-available/custom.ini owner=root group=root
+  template: src=custom.ini.j2 dest=/etc/php/{{ php_version }}/mods-available/custom.ini owner=root group=root
 - name: Create configuration links
-  file: src=/etc/php/7.1/mods-available/custom.ini dest=/etc/php/7.1/{{ item }}/conf.d/20-custom.ini state=link
+  file: src=/etc/php/{{ php_version }}/mods-available/custom.ini dest=/etc/php/{{ php_version }}/{{ item }}/conf.d/20-custom.ini state=link
   with_items: [fpm, cli]
   notify:
-    - restart php7.1-fpm
+    - restart php{{ php_version }}-fpm

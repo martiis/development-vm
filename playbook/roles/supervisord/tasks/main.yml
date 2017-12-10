@@ -1,6 +1,7 @@
 ---
   - name: Install package
     apt: pkg=supervisor update_cache=true cache_valid_time=3600
+    
   - name: Create supervisor programs and groups
     template: src=supervisor.conf.j2 dest=/etc/supervisor/conf.d/custom.conf
     when: supervisord_programs|length > 0

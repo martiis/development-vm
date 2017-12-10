@@ -1,5 +1,6 @@
 ---
   - name: Adding redis repository
     apt_repository: repo=ppa:chris-lea/redis-server
+    
   - name: Installing packages
     apt: pkg=redis-server update_cache=true

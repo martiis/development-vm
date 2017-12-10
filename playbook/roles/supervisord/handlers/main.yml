@@ -1,5 +1,6 @@
 ---
   - name: supervisorctl reread
     shell: supervisorctl reread
+    
   - name: supervisorctl update
     shell: supervisorctl update

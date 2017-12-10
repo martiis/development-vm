@@ -1,21 +1,25 @@
 ---
   - name: Install package
     apt: pkg=zsh state=present
+
   - name: Pull ZSH from repository
     git: >
       repo=https://github.com/robbyrussell/oh-my-zsh.git
       dest=/home/{{ ansible_ssh_user }}/.oh-my-zsh
       update=yes
+
   - name: Setting permissions
     file: >
         path=/home/{{ ansible_ssh_user }}/.oh-my-zsh
         owner={{ ansible_ssh_user }}
         group={{ ansible_ssh_user }}
         recurse=yes
+
   - name: Setting as default shell
     user: >
         name={{ ansible_ssh_user }}
         shell=/bin/zsh
+
   - name: Install configuration file
     template: >
         src=zshrc.j2

@@ -1,0 +1,6 @@
+---
+  - name: Install Composer - Dependency Manager for PHP
+    shell: curl -sS https://getcomposer.org/installer | php -- --filename=composer
+    args:
+      chdir: /usr/local/bin
+      creates: /usr/local/bin/composer

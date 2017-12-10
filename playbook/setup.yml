@@ -50,13 +50,3 @@
 
       - name: Generate en_US.UTF-8 Locale
         locale_gen: name=en_US.UTF-8 state=present
-
-    tasks:
-      - name: Install Composer - Dependency Manager for PHP
-        shell: curl -sS https://getcomposer.org/installer | php -- --filename=composer
-        args:
-          chdir: /usr/local/bin
-          creates: /usr/local/bin/composer
-
-      - name: Create debug env file
-        copy: src=files/debug dest=/usr/local/bin/debug mode=755

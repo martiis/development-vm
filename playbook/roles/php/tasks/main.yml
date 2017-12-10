@@ -31,11 +31,9 @@
     notify:
       - restart php-fpm
 
-  - name: Remove default pool
-    file: path=/etc/php/{{ php_version }}/fpm/pool.d/www.conf state=absent
+  - import_tasks: pools.yml
 
-  - name: Create pools
-    template: src=pool.conf.j2 dest=/etc/php/{{ php_version }}/fpm/pool.d/{{ item.name }}.conf owner=root group=root
-    with_items: "{{ php_pools }}"
-    notify:
-      - restart php-fpm
+  - import_tasks: composer.yml
+
+  - name: Create debug file
+    copy: src=files/debug dest=/usr/local/bin/debug mode=755

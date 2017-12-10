@@ -15,7 +15,7 @@
       - role: nginx
         nginx_vhosts:
           symfony:
-            - { name: vm.dev, document_root: /home/vagrant/public_html/web, document_index: app_dev }
+            - { name: vm.local, document_root: /home/vagrant/public_html/web, document_index: app_dev }
 
       - role: mysql
         mysql_bind_address: 0.0.0.0

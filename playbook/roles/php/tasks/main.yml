@@ -29,7 +29,7 @@
     file: src=/etc/php/{{ php_version }}/mods-available/custom.ini dest=/etc/php/{{ php_version }}/{{ item }}/conf.d/20-custom.ini state=link
     with_items: [fpm, cli]
     notify:
-      - restart php{{ php_version }}-fpm
+      - restart php-fpm
 
   - name: Remove default pool
     file: path=/etc/php/{{ php_version }}/fpm/pool.d/www.conf state=absent

@@ -1,9 +1,9 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-required_plugins = ["vagrant-hostsupdater"]
+required_plugins = ["vagrant-hostsupdater", "vagrant-bindfs"]
 required_plugins.each do |plugin|
-	if not Vagrant.has_plugin?(plugin) then
+  if not Vagrant.has_plugin?(plugin) then
     abort("Required plugin `#{plugin}` is not installed.\nRun: vagrant plugin install #{plugin}")
 	end
 end
@@ -20,9 +20,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"
     v.vm.network :private_network, ip: "192.168.52.101"
-    v.vm.synced_folder "./public_html", "/home/vagrant/public_html",
+    v.vm.synced_folder "./public_html", "/vagrant-nfs",
       type: "nfs",
       mount_options: ['rw', 'vers=3', 'tcp']
+    v.bindfs.bind_folder "/vagrant-nfs", "/home/vagrant/public_html"
 
     v.vm.provider :virtualbox do |virtualbox|
       virtualbox.gui = false

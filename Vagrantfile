@@ -14,8 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
-  config.vm.hostname = "ebetting.dev"
-  config.hostsupdater.aliases = ["www.ebetting.dev"]
+  config.vm.hostname = "vm.dev"
+  config.hostsupdater.aliases = ["www.vm.dev"]
 
   config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"

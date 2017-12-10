@@ -21,6 +21,9 @@
       - common
       - opcache
       - xdebug
+      - apcu
+    notify:
+      - restart php-fpm
 
   - name: Create custom configuration
     template: src=custom.ini.j2 dest=/etc/php/{{ php_version }}/mods-available/custom.ini owner=root group=root

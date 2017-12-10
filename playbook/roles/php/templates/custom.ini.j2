@@ -11,6 +11,12 @@ xdebug.remote_handler=dbgp
 xdebug.remote_port={{ php_xdebug_port }}
 xdebug.remote_host={{ php_xdebug_remote_host }}
 
+[opcache]
+opcache.revalidate_freq=0
+opcache.memory_consumption=192
+opcache.interned_strings_buffer=16
+opcache.fast_shutdown=1
+
 post_max_size = {{ php_post_max_size }}
 upload_max_filesize = {{ php_upload_max_filesize }}
 memory_limit = {{ php_memory_limit }}

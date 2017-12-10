@@ -1,6 +1,6 @@
 ---
   - name: Setup
-    hosts: vm
+    hosts: all
     become: True
     vars:
         box_address: "{{ hostvars[inventory_hostname].ansible_all_ipv4_addresses[1] }}"

@@ -5,7 +5,7 @@ group = {{ item.group }}
 
 listen = /run/php/{{ item.name }}.sock
 listen.owner = www-data
-listen.group = {{ item.user }}
+listen.group = {{ item.group }}
 ;listen.mode = 0660
 
 pm = dynamic

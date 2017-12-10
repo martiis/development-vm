@@ -20,7 +20,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"
     v.vm.network :private_network, ip: "192.168.52.101"
-    v.vm.synced_folder "./public_html", "/home/vagrant/public_html", type: "nfs", mount_options: ['rw', 'vers=3', 'tcp']
+    v.vm.synced_folder "./public_html", "/home/vagrant/public_html",
+      type: "nfs",
+      mount_options: ['rw', 'vers=3', 'tcp']
 
     v.vm.provider :virtualbox do |virtualbox|
       virtualbox.gui = false

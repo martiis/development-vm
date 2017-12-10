@@ -10,7 +10,7 @@
       - role: php
         php_xdebug_remote_host: "{{ box_gateway }}"
         php_pools:
-          - { name: vm.dev, user: vagrant, group: vagrant }
+          - { name: vm.local, user: vagrant, group: vagrant }
 
       - role: nginx
         nginx_vhosts:

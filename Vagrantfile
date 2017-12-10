@@ -1,7 +1,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-required_plugins = ["vagrant-hostmanager"]
+required_plugins = ["vagrant-hostsupdater"]
 required_plugins.each do |plugin|
 	if not Vagrant.has_plugin?(plugin) then
     abort("Required plugin `#{plugin}` is not installed.\nRun: vagrant plugin install #{plugin}")
@@ -14,12 +14,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.insert_key = false
   config.ssh.forward_agent = true
 
-  config.vm.hostname = "vm.dev"
-  config.hostmanager.enabled = true
-  config.hostmanager.manage_host = true
-  config.hostmanager.ignore_private_ip = false
-  config.hostmanager.include_offline = true
-  config.hostmanager.aliases = ["www.vm.dev"]
+  config.vm.hostname = "ebetting.dev"
+  config.hostsupdater.aliases = ["www.ebetting.dev"]
 
   config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"

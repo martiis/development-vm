@@ -2,33 +2,13 @@
   - name: Setup
     hosts: all
     become: True
-    vars:
-        box_address: "{{ hostvars[inventory_hostname].ansible_all_ipv4_addresses[1] }}"
-        box_address_parts: "{{ box_address.split('.') }}"
-        box_gateway: "{{ box_address_parts[0] + '.' + box_address_parts[1] + '.' + box_address_parts[2] + '.1' }}"
+    vars_files:
+      - vars/main.yml
     roles:
       - role: php
-        php_xdebug_remote_host: "{{ box_gateway }}"
-        php_pools:
-          - { name: vm.local, user: vagrant, group: vagrant }
-
       - role: nginx
-        nginx_vhosts:
-          symfony:
-            - { name: vm.local, document_root: /home/vagrant/public_html/web, document_index: app_dev }
-
       - role: mysql
-        mysql_bind_address: 0.0.0.0
-        mysql_users:
-          - { name: root, host: "{{ box_gateway }}", password: 'root', privileges: '*.*:ALL,GRANT' }
-
-      # - role: nodejs
-      #   npm_global_packages: [bower, gulp]
-
       - role: zsh
-        ZSH_EXTRA: >
-          alias dev='php bin/console --env=dev'
-          alias prod='php bin/console --env=prod'
 
     pre_tasks:
       - name: Install packages

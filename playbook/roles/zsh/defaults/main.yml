@@ -1,9 +1,10 @@
-ZSH_THEME: mortalscumbag
-ZSH_DISABLE_AUTO_UPDATE: true
-ZSH_ENABLE_CORRECTION: true
-ZSH_COMPLETION_WAITING_DOTS: true
-ZSH_PLUGINS:
-  - git
-  - common-aliases
-ZSH_EXTRA: ''
-ZSH_LANG: en_US.UTF-8
+---
+  zsh_theme: mortalscumbag
+  zsh_disable_auto_update: true
+  zsh_enable_correction: true
+  zsh_completion_waiting_dots: true
+  zsh_plugins:
+    - git
+    - common-aliases
+  zsh_extra: ''
+  zsh_lang: en_US.UTF-8

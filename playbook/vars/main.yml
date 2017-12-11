@@ -1,0 +1,18 @@
+---
+  vm_remote_host: "192.168.52.1"
+
+  php_xdebug_remote_host: "{{ vm_remote_host }}"
+  php_pools:
+    - { name: vm.local, user: vagrant, group: vagrant }
+
+  nginx_vhosts:
+    symfony:
+      - { name: vm.local, document_root: /home/vagrant/public_html/web, document_index: app_dev }
+
+  mysql_bind_address: "0.0.0.0"
+  mysql_users:
+    - { name: root, password: root, host: "{{ vm_remote_host }}", priv: "*.*:ALL,GRANT" }
+
+  zsh_extra: >
+    alias dev='php bin/console --env=dev'
+    alias prod='php bin/console --env=prod'

@@ -30,7 +30,7 @@
     notify:
       - restart php-fpm
 
-  - name: Create configuration links
+  - name: Create custom configuration link
     file: src=/etc/php/{{ php_version }}/mods-available/custom.ini dest=/etc/php/{{ php_version }}/{{ item }}/conf.d/20-custom.ini state=link
     with_items: [fpm, cli]
     notify:

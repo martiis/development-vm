@@ -5,3 +5,4 @@ private_html/*
 .vagrant/
 /vendor/
 /html/
+/playbook/setup.retry

@@ -19,5 +19,5 @@ server {
     }
 
     error_log /var/log/nginx/{{ item.name | replace('.', '_') }}.error.log;
-    access_log /var/log/nginx/{{ item.name | replace(',', '_') }}.access.log;
+    access_log /var/log/nginx/{{ item.name | replace('.', '_') }}.access.log;
 }

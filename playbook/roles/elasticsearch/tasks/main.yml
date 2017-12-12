@@ -9,7 +9,10 @@
     apt_repository: repo="deb https://artifacts.elastic.co/packages/{{ elasticsearch_version }}/apt stable main" state=present
 
   - name: Install package
-    apt: name=elasticsearch state=present update_cache=yes cache_valid_time=3600
+    apt: name={{ item }} state=present update_cache=yes cache_valid_time=3600
+    with_items:
+      - elasticsearch
+      - kibana
 
   - name: Configurate elasticsearch.yml
     template: src=elasticsearch.yml.j2 dest=/etc/elasticsearch/elasticsearch.yml owner=root group=elasticsearch

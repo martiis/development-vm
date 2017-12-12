@@ -1,0 +1,12 @@
+---
+  - name: Copy kibana virtual host
+    template: src=kibana.vhost.j2 dest=/etc/nginx/sites-available/kibana
+    when: nginx_kibana_vhost is defined
+    notify:
+      - restart nginx
+
+  - name: Enable kibana host
+    file: src=/etc/nginx/sites-available/kibana  dest=/etc/nginx/sites-enabled/kibana state=link
+    when: nginx_kibana_vhost is defined
+    notify:
+      - restart nginx

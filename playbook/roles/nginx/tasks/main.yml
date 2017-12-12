@@ -2,21 +2,11 @@
   - name: Install package
     apt: pkg=nginx update_cache=true cache_valid_time=3600
 
-  - name: Copy Syfmony virtual hosts
-    template: src=symfony.vhost.j2 dest=/etc/nginx/sites-available/symfony.{{ item.name }}
-    when: nginx_vhosts.symfony is defined
-    with_items: "{{ nginx_vhosts.symfony }}"
-    notify:
-      - restart nginx
-
   - name: Copy nginx configuration file
     template: src=nginx.conf.j2 dest=/etc/nginx/nginx.conf
     notify:
       - restart nginx
 
-  - name: Enable Symfony sites
-    file: src=/etc/nginx/sites-available/symfony.{{ item.name }}  dest=/etc/nginx/sites-enabled/symfony.{{ item.name }} state=link
-    when: nginx_vhosts.symfony is defined
-    with_items: "{{ nginx_vhosts.symfony }}"
-    notify:
-      - restart nginx
+  - import_tasks: symfony.yml
+
+  - import_tasks: kibana.yml

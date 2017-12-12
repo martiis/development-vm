@@ -1,4 +1,5 @@
 ---
+  nginx_kibana_vhost: ~
   nginx_vhosts:
     symfony:
       - { name: vm.dev, document_root: /var/www/web, document_index: app_dev }

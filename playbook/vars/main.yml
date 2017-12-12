@@ -5,6 +5,7 @@
   php_pools:
     - { name: vm.local, user: vagrant, group: vagrant }
 
+  nginx_kibana_vhost: kibana.vm.local
   nginx_vhosts:
     symfony:
       - { name: vm.local, document_root: /home/vagrant/public_html/web, document_index: app_dev }

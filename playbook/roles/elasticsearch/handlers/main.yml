@@ -1,6 +1,6 @@
 ---
-  - name: start elasticsearch
-    service: name=elasticsearch state=started
-
   - name: restart elasticsearch
     service: name=elasticsearch state=restarted
+
+  - name: restart kibana
+    service: name=kibana state=restarted

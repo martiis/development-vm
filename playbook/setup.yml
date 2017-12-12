@@ -10,6 +10,9 @@
       - role: mysql
       - role: zsh
 
+      - role: java
+      - role: elasticsearch
+
     pre_tasks:
       - name: Install packages
         apt: pkg={{ item }} update_cache=true cache_valid_time=3600

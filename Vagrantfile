@@ -15,7 +15,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.ssh.forward_agent = true
 
   config.vm.hostname = "vm.local"
-  config.hostsupdater.aliases = ["www.vm.local"]
+  config.hostsupdater.aliases = ["kibana.vm.local", "www.vm.local"]
 
   config.vm.define "vm" do |v|
     v.vm.box = "ubuntu/trusty64"

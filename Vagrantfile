@@ -36,7 +36,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     end
   end
 
-  # config.vm.provision "shell", path: "vagrant/swap.sh"
+  config.vm.provision "shell", path: "vagrant/swap.sh"
   config.vm.provision "shell", path: "vagrant/python.sh"
   config.vm.provision "ansible" do |ansible|
     ansible.compatibility_mode = "2.0"

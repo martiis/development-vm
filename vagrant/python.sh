@@ -1,8 +1,11 @@
 #!/bin/bash
 
-echo " [Shell script] Updating box ..."
-sudo apt-get -qq update
-sudo apt-get -y -qq upgrade
+if [ ! -f ~/.runonce ] then
+    echo " [Shell script] Updating box ..."
+    sudo apt-get -qq update
+    sudo apt-get -y -qq upgrade
+    touch ~/.runonce
+fi
 
 if [ ! -x /usr/bin/git ]; then
     echo " [Shell script] Installing git ..."

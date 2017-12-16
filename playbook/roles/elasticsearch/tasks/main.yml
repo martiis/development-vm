@@ -24,6 +24,8 @@
     notify:
       - restart kibana
 
+  - import_tasks: xpack.yml
+
   - name: Ensure running
     service: name=elasticsearch state=started
 

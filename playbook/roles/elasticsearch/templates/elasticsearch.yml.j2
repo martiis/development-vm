@@ -81,8 +81,15 @@ http.port: {{ elasticsearch_http_port }}
 #
 # For more information, consult the gateway module documentation.
 #
+{% if elasticsearch_install_xpack == true %}
+# ---------------------------------- X-Pack ------------------------------------
+#
+xpack.security.enabled: false
+#
+{% endif %}
 # ---------------------------------- Various -----------------------------------
 #
 # Require explicit names when deleting indices:
 #
 #action.destructive_requires_name: true
+

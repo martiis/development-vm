@@ -1,0 +1,23 @@
+---
+  - name: Install xpack for elasticsearch
+    command: bin/elasticsearch-plugin install x-pack --batch
+    when: elasticsearch_install_xpack is defined
+    become: true
+    args:
+      chdir: /usr/share/elasticsearch
+      creates: /usr/share/elasticsearch/plugins/x-pack
+    notify:
+      - restart elasticsearch
+
+  - name: Install xpack for kibana
+    command: bin/kibana-plugin install x-pack
+    when: elasticsearch_install_xpack is defined
+    become: true
+    args:
+      chdir: /usr/share/kibana
+      creates: /usr/share/kibana/plugins/x-pack
+    notify:
+      - restart kibana
+
+  - name: Fix permissions for kibana assets
+    file: path=/usr/share/kibana/optimize/bundles owner=kibana group=kibana state=directory recurse=yes

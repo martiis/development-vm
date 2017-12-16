@@ -20,6 +20,5 @@ else
 fi
 
 # output results to terminal
-df -h
 cat /proc/swaps
 cat /proc/meminfo | grep Swap

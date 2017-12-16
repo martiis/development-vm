@@ -102,3 +102,7 @@ elasticsearch.url: "http://localhost:{{ elasticsearch_http_port }}"
 # The default locale. This locale can be used in certain circumstances to substitute any missing
 # translations.
 #i18n.defaultLocale: "en"
+
+{% if elasticsearch_install_xpack == true %}
+xpack.security.enabled: false
+{% endif %}

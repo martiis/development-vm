@@ -1,6 +1,6 @@
 #!/bin/bash
 
-if [ ! -f ~/.runonce ] then
+if [ ! -f ~/.runonce ]; then
     echo " [Shell script] Updating box ..."
     sudo apt-get -qq update
     sudo apt-get -y -qq upgrade

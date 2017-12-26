@@ -18,4 +18,4 @@
     alias dev='php bin/console --env=dev'
     alias prod='php bin/console --env=prod'
 
-  elasticsearch_install_xpack: false
+  elasticsearch_install_xpack: true
